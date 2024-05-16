@@ -12,7 +12,9 @@ export default function Home() {
     <div className="flex flex-col">
       <Header></Header>
       <div className="flex relative ">
+        <div className="hidden 2xl:block">
         <LeftPart></LeftPart>
+        </div>
         <RightPart></RightPart>
         <PopularAcc></PopularAcc>
       </div>
