@@ -20,13 +20,13 @@ const SignInContent = () => {
         setpassword(e.target.value)
       }} title={"Password"} placeholder={"123456"} />
       <button type="submit" onClick={async()=>{
-        axios.post("http://localhost:6000/api/v1/user",{
+        axios.post("http://localhost:3000/api/users",{
           data:{
             email: userName,
             password
           }
         })
-        }} className="bg-slate-950 mt-5 py-2 rounded-md text-white w-[100%] ">
+        }} className="bg-zinc-950 mt-5 py-2 rounded-md text-white w-[100%] ">
         Login
       </button>
       <h3 className="mt-3 text-zinc-500 dark:text-zinc-100 text-lg  text-center">Don't have account? <Link className="underline ml-1" href="signUp">Sign Up</Link></h3>
