@@ -10,7 +10,7 @@ import logo from "./../../public/letter-n.png";
 import SelectDemo from "./SelectDemo";
 export default function Home() {
   return (
-    <div className="bg-red-800 fixed w-[100vw] z-50 flex shadow-lg justify-between px-10 py-3 border-b border-red-600">
+    <div className="bg-red-800 fixed top-0 w-[100vw] z-50 flex shadow-lg justify-between px-10 py-3 border-b border-red-600">
       <div className="flex gap-10">
         <div className="flex gap-2 text-white items-center">
           <div className="2xl:hidden">
