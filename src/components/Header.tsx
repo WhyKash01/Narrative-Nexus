@@ -8,7 +8,9 @@ import { Input } from "@/components/ui/input";
 import Search from "./../../public/search.png";
 import logo from "./../../public/letter-n.png";
 import SelectDemo from "./SelectDemo";
+import {signIn, signOut, useSession} from "next-auth/react"
 export default function Home() {
+  const session = useSession();
   return (
     <div className="bg-red-800 fixed top-0 w-[100vw] z-50 flex shadow-lg justify-between px-10 py-3 border-b border-red-600">
       <div className="flex gap-10">
@@ -34,11 +36,14 @@ export default function Home() {
             SignUp
           </Button>
         </Link>
-        <Link href="/login">
-          <Button className="h-9 bg-black hidden sm:block hover:bg-zinc-900 text-white">
+        <Link href="/api/auth/signin">
+          <Button onClick={()=>{signIn()}} className="h-9 bg-black hidden sm:block hover:bg-zinc-900 text-white">
             Login
           </Button>
         </Link>
+        <Button  onClick={()=>{signOut()}} className="h-9 bg-black hidden sm:block hover:bg-zinc-900 text-white">
+            Logout
+          </Button>
         <div className="sm:hidden ">
         <SelectDemo></SelectDemo>
         </div>
@@ -46,6 +51,7 @@ export default function Home() {
         <Toggle></Toggle>
         </div>
       </div>
+      {JSON.stringify(session)}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css";
 import {RecoilRoot} from 'recoil';
+import { Providers } from "./Providers";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -16,7 +17,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
           <RecoilRoot>
+            <Providers>
             {children}
+            </Providers>
             </RecoilRoot>
           </ThemeProvider></body>
     </html>
