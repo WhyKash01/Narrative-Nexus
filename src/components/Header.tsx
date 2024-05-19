@@ -41,7 +41,7 @@ export default function Home() {
             Login
           </Button>
         </Link>
-        <Button  onClick={()=>{signOut()}} className="h-9 bg-black hidden sm:block hover:bg-zinc-900 text-white">
+        <Button onClick={()=>{signOut()}} className="h-9 bg-black hidden sm:block hover:bg-zinc-900 text-white">
             Logout
           </Button>
         <div className="sm:hidden ">
@@ -51,7 +51,7 @@ export default function Home() {
         <Toggle></Toggle>
         </div>
       </div>
-      {JSON.stringify(session)}
+      
     </div>
   );
 }
