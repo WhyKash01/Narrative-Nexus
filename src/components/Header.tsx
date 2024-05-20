@@ -21,7 +21,7 @@ export default function Home() {
           <Link className="flex sm:ml-5 2xl:ml-0 ml-1 gap-3 items-center" href="/">
             <Image className="w-6 h-6" src={logo} alt=""></Image>
             <h3 className="font-semibold lg:block hidden text-lg">
-              Narrative Nexus  
+              Narrative Nexus   
             </h3>
           </Link>
         </div>
