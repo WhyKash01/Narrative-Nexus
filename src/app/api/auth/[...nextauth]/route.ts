@@ -15,7 +15,7 @@ const handler = NextAuth({
                 return {
                     id: "jhasd",
                     name: credentials.username,
-                    image: credentials.password
+                    image: credentials.password 
                 };
             },
         }),
