@@ -51,6 +51,7 @@ export default function Home() {
         <Toggle></Toggle>
         </div>
       </div>
+      {JSON.stringify(session)}
       
     </div>
   );
