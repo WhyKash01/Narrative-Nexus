@@ -1,22 +1,22 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import User from "@prisma/client"
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-export async function POST(request: any){
-
+export async function POST(req: NextRequest){
+    
+    const body = await req.json();
     const newUser = await prisma.user.create({
+        
         data: {
-            username: "harkirat@gmail.com",
-            id: 1 ,
-            name: "", 
-            password: ""
-  
+            username: body.username,
+            id: body.id ,
+            name: "sd", 
+            password: "sd"
+    
         },
       });
-      console.log(newUser);
-    const name = "yash";
-
+    
     // const existingUser = await User.findOne({
     //     username: req.body.username
     // })
@@ -29,6 +29,7 @@ export async function POST(request: any){
     //     name: "dfaa",
     //     phone: "9asd6"
     // }];
+    const name = "acc created";
     return NextResponse.json(name);
 }
 export function GET(request: any){
