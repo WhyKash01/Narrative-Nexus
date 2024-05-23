@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "@prisma/client"
 import { PrismaClient } from '@prisma/client';
-import { STATUS_CODES } from "http";
 const zod = require("zod")
 const bcrypt = require('bcrypt');
 
@@ -37,7 +36,7 @@ export async function POST(req: NextRequest){
         const name = "acc created";
         return NextResponse.json(newUser);
     } catch (error) {
-        return NextResponse.json("Email already taken", {status: 500})
+        return NextResponse.json("Email already taken", {status: 401})
     }
 }
 export function GET(request: any){

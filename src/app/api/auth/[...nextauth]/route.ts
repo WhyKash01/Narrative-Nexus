@@ -1,6 +1,9 @@
 import NextAuth from "next-auth";
+
+import {  PrismaClient } from '@prisma/client';
 import Credentials from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github"
+import { NextResponse } from "next/server";
 const handler = NextAuth({
     providers:[
         Credentials({
@@ -10,13 +13,31 @@ const handler = NextAuth({
                 password: { label: 'password', type: 'password', placeholder: 'password'},
             },
             async authorize(credentials:any){
-                console.log(credentials)
                 
-                return {
-                    id: "jhasd",
-                    name: credentials.username,
-                    image: credentials.password 
-                };
+                    const prisma = new PrismaClient();
+                    try {
+                        const User =await prisma.user.findUnique({
+                            where: {
+                                username: credentials.username
+                            }
+                        })
+                        if(!User){
+                            throw new Error ("no user found with this email")
+                        }
+                        const bcrypt = require('bcrypt');
+                        const isPasswordCorrect = await bcrypt.compare(credentials.password, User.password)
+                        if(isPasswordCorrect){
+                            return User
+                        }
+                        else{
+                            throw new Error("password not correct")
+                        }
+                    } catch (error:any) {
+                        throw new Error(error)
+                    }
+                    
+                    
+                
             },
         }),
         GitHubProvider({
