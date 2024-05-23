@@ -1,36 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "@prisma/client"
 import { PrismaClient } from '@prisma/client';
+import { STATUS_CODES } from "http";
+const zod = require("zod")
+const bcrypt = require('bcrypt');
 
 const prisma = new PrismaClient();
+
+const signupBody = zod.object({
+    username: zod.string().email(),
+	name: zod.string(),
+	password: zod.string()
+})
+
 export async function POST(req: NextRequest){
     
     const body = await req.json();
-    const newUser = await prisma.user.create({
+    const { success } = signupBody.safeParse(body)
+    if (!success) {
+        return NextResponse.json({
+            message: "Email already taken / Incorrect inputs"
+        })
+    }
+    const saltRounds = 10;
+    const hash = await bcrypt.hash(body.password, saltRounds);
+    try {
+        const newUser = await prisma.user.create({
         
-        data: {
-            username: body.username,
-            id: body.id ,
-            name: "sd", 
-            password: "sd"
-    
-        },
-      });
-    
-    // const existingUser = await User.findOne({
-    //     username: req.body.username
-    // })
-
-    // const user=[{
-    //     name: "sda",
-    //     phone: "9456"
-    // },
-    // {
-    //     name: "dfaa",
-    //     phone: "9asd6"
-    // }];
-    const name = "acc created";
-    return NextResponse.json(name);
+            data: {
+                username: body.username,
+                name: body.name, 
+                password: hash
+            },
+          });
+        
+        const name = "acc created";
+        return NextResponse.json(newUser);
+    } catch (error) {
+        return NextResponse.json("Email already taken", {status: 500})
+    }
 }
 export function GET(request: any){
     
