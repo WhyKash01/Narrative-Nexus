@@ -12,7 +12,7 @@ const handler = NextAuth({
                 username:{ label: 'email', type: 'text', placeholder: 'Email'},
                 password: { label: 'password', type: 'password', placeholder: 'password'},
             },
-            async authorize(credentials:any){
+            async authorize(credentials:any): Promise<any>{
                 
                     const prisma = new PrismaClient();
                     try {
@@ -34,10 +34,9 @@ const handler = NextAuth({
                         }
                     } catch (error:any) {
                         throw new Error(error)
+                        
                     }
-                    
-                    
-                
+                                 
             },
         }),
         GitHubProvider({
