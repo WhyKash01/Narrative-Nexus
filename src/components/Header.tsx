@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 // import logo from "./../../public/cross.png"
 import Toggle from "./Toggle";
@@ -11,6 +12,7 @@ import SelectDemo from "./SelectDemo";
 import {signIn, signOut, useSession} from "next-auth/react"
 export default function Home() {
   const session = useSession();
+  console.log(session)
   return (
     <div className="bg-red-800 fixed top-0 w-[100vw] z-50 flex shadow-lg justify-between px-10 py-3 border-b border-red-600">
       <div className="flex gap-10">
@@ -51,7 +53,6 @@ export default function Home() {
         <Toggle></Toggle>
         </div>
       </div>
-      {JSON.stringify(session)}
       
     </div>
   );

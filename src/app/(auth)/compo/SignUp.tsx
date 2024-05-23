@@ -27,8 +27,15 @@ const SignInContent = () => {
         setpassword(e.target.value)
       }} title={"Password"} placeholder={"123456"} />
       <button type="submit" onClick={async()=>{
-        Axios.post("http://localhost:3000/api/users")
+        Axios.post("http://localhost:3000/api/users",{
+          
+            username: userName,
+            password,
+            name: firstName+LastName
+          
+        })
         // localStorage.setItem("token", response.data.token);
+
       }} className="bg-slate-950 border border-zinc-900 mt-5 py-2 rounded-md text-white w-[100%] ">
         Sign Up
       </button>
