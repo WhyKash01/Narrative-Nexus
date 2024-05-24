@@ -10,12 +10,14 @@ import Hamberger from "./Hamberger";
 import { Input } from "@/components/ui/input";
 import Search from "./../../public/search.png";
 import logo from "./../../public/letter-n.png";
+import { useRouter } from 'next/navigation'
 import SelectDemo from "./SelectDemo";
-import usericon from "./../../public/user1.png" 
+import usericon from "./../../public/user1.png"; 
 import { signIn, signOut, useSession } from "next-auth/react";
 export default function Home() {
   const session = useSession();
   console.log(session);
+  const router = useRouter()
   return (
     <div className="bg-red-800 fixed top-0 w-[100vw] z-50 flex shadow-lg justify-between px-10 py-3 border-b border-red-600">
       <div className="flex gap-10">
@@ -72,7 +74,9 @@ export default function Home() {
           >
             Logout
           </Button>
-          <Avatar className="p-[1.5px] bg-white w-10 h-10">
+          <Avatar onClick={()=>{
+            router.push('/profile')
+          }} className="p-[1.5px] hover:cursor-pointer bg-white w-10 h-10">
             <Image src={usericon} alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
