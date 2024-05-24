@@ -8,6 +8,7 @@ const SignInContent = () => {
   const [LastName, setLastName]= useState("")
   const [userName, setuserName]= useState("")
   const [password, setpassword]= useState("")
+  const  [err, seterr]=useState(false);
   return (
     <div className="my-5 ">
       <h1 className="text-3xl text-center  font-bold"> Sign Up</h1>
@@ -27,18 +28,27 @@ const SignInContent = () => {
         setpassword(e.target.value)
       }} title={"Password"} placeholder={"123456"} />
       <button type="submit" onClick={async()=>{
-        Axios.post("http://localhost:3000/api/users",{
+        
+        try {
+          Axios.post("http://localhost:3000/api/users",{
           
             username: userName,
             password,
             name: firstName+LastName
           
         })
+        
+        alert("you are logged in")
+        } catch (error) {
+          alert("logged in fail")
+        }
+        
         // localStorage.setItem("token", response.data.token);
 
       }} className="bg-slate-950 border border-zinc-900 mt-5 py-2 rounded-md text-white w-[100%] ">
         Sign Up
       </button>
+      <h3>{err?"alreadytaken":""}</h3>
       <h3 className="mt-3 text-zinc-500 dark:text-zinc-100 text-lg  text-center">Already have an accout? <Link className="underline ml-1" href={"login"}>Login</Link></h3>
     </div>
   );
