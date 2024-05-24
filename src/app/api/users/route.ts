@@ -18,7 +18,7 @@ export async function POST(req: NextRequest){
     const { success } = signupBody.safeParse(body)
     if (!success) {
         return NextResponse.json({
-            message: "Email already taken / Incorrect inputs"
+            message: "Incorrect inputs"
         })
     }
     const saltRounds = 10;
@@ -32,11 +32,15 @@ export async function POST(req: NextRequest){
                 password: hash
             },
           });
-        
+        const response= {...newUser, authenticate: true}
         const name = "acc created";
-        return NextResponse.json(newUser);
+        return NextResponse.json(response);
     } catch (error) {
-        return NextResponse.json("Email already taken", {status: 401})
+        return NextResponse.json(
+            {
+                message:"Email already taken",
+                authenticate: false
+            })
     }
 }
 export function GET(request: any){
