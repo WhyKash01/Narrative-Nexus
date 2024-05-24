@@ -38,7 +38,7 @@ const SignInContent = () => {
           
             username: userName,
             password,
-            name: firstName+LastName
+            name: firstName+" "+LastName
           
         })
         .then(res => {

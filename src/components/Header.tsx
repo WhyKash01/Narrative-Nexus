@@ -68,6 +68,7 @@ export default function Home() {
           <div className="flex items-center gap-1 sm:gap-5">
           <Button
             onClick={() => {
+              router.push('/')
               signOut();
             }}
             className="h-9 bg-black hidden sm:block hover:bg-zinc-900 text-white"
