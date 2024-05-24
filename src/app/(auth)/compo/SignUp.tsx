@@ -37,6 +37,7 @@ const SignInContent = () => {
             name: firstName+LastName
           
         })
+
         
         alert("you are logged in")
         } catch (error) {
