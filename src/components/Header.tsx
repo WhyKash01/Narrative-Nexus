@@ -2,6 +2,8 @@
 import Image from "next/image";
 // import logo from "./../../public/cross.png"
 import Toggle from "./Toggle";
+import { Avatar } from "./ui/avatar";
+import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Hamberger from "./Hamberger";
@@ -9,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import Search from "./../../public/search.png";
 import logo from "./../../public/letter-n.png";
 import SelectDemo from "./SelectDemo";
+import usericon from "./../../public/user1.png" 
 import { signIn, signOut, useSession } from "next-auth/react";
 export default function Home() {
   const session = useSession();
@@ -69,6 +72,10 @@ export default function Home() {
           >
             Logout
           </Button>
+          <Avatar className="p-[1.5px] bg-white w-10 h-10">
+            <Image src={usericon} alt="@shadcn" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
           </div>
         ) : null}
 
