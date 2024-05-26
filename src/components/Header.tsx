@@ -84,7 +84,6 @@ export default function Home() {
           </div>
         ) : null}
 
-
         <div className="sm:hidden ">
           <SelectDemo></SelectDemo>
         </div>
