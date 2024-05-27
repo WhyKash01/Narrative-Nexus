@@ -24,7 +24,8 @@ const Profile = () => {
                     <div>0 followers</div>
                     <div>0 following</div>
                 </div>
-                <div className='mt-2'>{session.data?.user?.name}</div>
+                <div className='mt-2'>{session.data?.user?.name}
+                {JSON.stringify(session)}</div>
                 <div className=' mt-2'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et explicabo eius deserunt doloribus corporis, veritatis iure laudantium, nisi asperiores quas nam, autem minima quaerat id dolores. Fuga explicabo suscipit modi, culpa accusantium unde, repellat placeat nesciunt maiores est ea iste eius delectus eligendi! Amet fugiat aut veniam blanditiis eaque doloremque.</div>
             </div>
             </div>

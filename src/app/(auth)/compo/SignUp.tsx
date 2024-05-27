@@ -7,6 +7,7 @@ import Link from "next/link"
 const SignInContent = () => {
   const [firstName, setfirstName]= useState("")
   const [LastName, setLastName]= useState("")
+  const [Email, setEmail]= useState("")
   const [userName, setuserName]= useState("")
   const [password, setpassword]= useState("")
   const  [userData, setUserData]=useState();
@@ -26,6 +27,9 @@ const SignInContent = () => {
       }} title={"Last Name"} placeholder={"Doe"} />
       <InputField onChange={(e:any)=>{
         setuserName(e.target.value)
+      }} title={"Username"} placeholder={"John69"} />
+      <InputField onChange={(e:any)=>{
+        setEmail(e.target.value)
       }} title={"Email"} placeholder={"xyz@gmail.com"} />
       <InputField onChange={(e:any)=>{
         setpassword(e.target.value)
@@ -35,7 +39,7 @@ const SignInContent = () => {
         
         try {
           Axios.post("http://localhost:3000/api/users",{
-          
+            email: Email,
             username: userName,
             password,
             name: firstName+" "+LastName
