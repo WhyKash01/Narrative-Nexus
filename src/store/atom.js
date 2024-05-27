@@ -8,7 +8,12 @@ const textSize = atom({
   key: "textSize",
   default: 3,
 });
+const userdetail = atom({
+  key: "userdetail",
+  default: {}
+})
 export {
   textLineNumber,
   textSize,
+  userdetail,
 };

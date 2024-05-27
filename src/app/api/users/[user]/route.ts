@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
+import { number } from "zod";
 const zod = require("zod");
 const prisma = new PrismaClient();
 const userDetail = zod.object({
-    id: zod.number(),
+    email: zod.string(),
     authenticate: zod.boolean()
   });
-
 
 export async function POST(req: NextRequest){
     const body = await req.json();
@@ -22,14 +22,20 @@ export async function POST(req: NextRequest){
         message: "user not loggedin",
       });
   }
-  const user = await prisma.user.findUnique(
+  const User = await prisma.user.findUnique(
     {
-        where: {
-            id: body.id
+        where:{
+            email: body.email
         }
-    });
+    })
+    const userdetail= await prisma.userDetail.findMany(
+        {
+            where:{
+                userId: User!.id
+            }
+        });
     return NextResponse.json({
-        user 
+        userdetail
       });
 }
 export function PUT(request: any) {}
