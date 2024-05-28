@@ -36,6 +36,12 @@ export async function POST(req: NextRequest) {
         name: body.name,
         password: hash,
       },
+      
+    });
+    const userdetail = await prisma.userDetail.create({
+      data: {
+        userId: newUser.id
+      },
     });
     const response = { ...newUser, authenticate: true };
     const name = "acc created";

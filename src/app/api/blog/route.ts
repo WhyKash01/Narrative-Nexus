@@ -1,15 +1,20 @@
-import { NextResponse } from "next/server";
-
-export function POST(request: any){
-    const user=[{
-        name: "sda",
-        phone: "9456"
-    },
-    {
-        name: "dfaa",
-        phone: "9asd6"
-    }];
-    return NextResponse.json(user);
+import { NextRequest, NextResponse } from "next/server";
+import zod from "zod"
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+export async function POST(req: NextRequest){
+    const body = await req.json();
+    
+    const post = prisma.blog.create({
+        data:{
+            authorId: body.authorId,
+            content: body.content,
+            title: body.title,
+            thumbnail: body.thumbnail,
+            topic: body.topic
+        }
+    })
+    return NextResponse.json(post);
 }
 export function GET(request: any){
     

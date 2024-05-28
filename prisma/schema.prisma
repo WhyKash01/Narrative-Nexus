@@ -20,11 +20,12 @@ model User{
   email String @unique
   password String
   post Blog[]
-  userDetail UserDetail[]
+  comments Comments[]
+  userDetail UserDetail?
 }
 model UserDetail{
   id Int @id @default(autoincrement())
-  userId Int
+  userId Int @unique
   followers Int @default(0)
   following Int @default(0)
   bio String?
@@ -36,7 +37,23 @@ model UserDetail{
 model Blog {
   id Int @id @default(autoincrement())
   authorId Int
+  title String
+  topic String
   content String
-  thumbnail String
+  thumbnail String?
+  vote Int @default(0)
+  Comments Comments[]
   author User @relation(fields: [authorId], references: [id])
 }
+
+model Comments{
+  postId Int @unique
+  accoutId Int @unique
+  id Int @id @default(autoincrement())
+  content String
+  like Int @default(0)
+  dislike Int @default(0)
+  user User @relation(fields: [accoutId], references: [id])
+  post Blog @relation(fields: [postId], references: [id])
+}
+

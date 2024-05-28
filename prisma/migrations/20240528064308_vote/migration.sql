@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Blog" ALTER COLUMN "thumbnail" DROP NOT NULL,
+ALTER COLUMN "vote" SET DEFAULT 0;
