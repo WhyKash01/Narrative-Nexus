@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest){
     const body = await req.json();
     
-    const post = prisma.blog.create({
+    const post = await prisma.blog.create({
         data:{
             authorId: body.authorId,
             content: body.content,
@@ -16,8 +16,13 @@ export async function POST(req: NextRequest){
     })
     return NextResponse.json(post);
 }
-export function GET(request: any){
-    
+export async function GET(request: NextRequest){
+    const posts = await prisma.blog.findMany({
+        where:{
+            authorId: 1 
+        }
+    })
+    return NextResponse.json(posts);
 }
 export function PUT(request: any){
     
