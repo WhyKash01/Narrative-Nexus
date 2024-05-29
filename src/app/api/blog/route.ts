@@ -16,14 +16,7 @@ export async function POST(req: NextRequest){
     })
     return NextResponse.json(post);
 }
-export async function GET(request: NextRequest){
-    const posts = await prisma.blog.findMany({
-        where:{
-            authorId: 1 
-        }
-    })
-    return NextResponse.json(posts);
-}
+
 export function PUT(request: any){
     
 }
