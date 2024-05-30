@@ -17,14 +17,17 @@ import Axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
 import { userdetail } from "@/store/atom";
+import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 
 const page = () => {
-    const session = useSession();
+  const session = useSession();
+  const [uploaded, setuploaded]=useState(false)
+    const [ImageUrl, setImageUrl]=useState<any>()
     const [userDetail, setuserdetail]= useRecoilState<any>(userdetail)
     const [Title, setTitle]= useState("")
     const [Topic, setTopic]= useState("Topic")
     const [Content, setContent]= useState("")
-    const [Photo, setPhoto]= useState("")
+    
     useEffect(() => {
       
         Axios.post(`http://localhost:3000/api/users/hasdj`, {
@@ -59,8 +62,8 @@ const page = () => {
                 setTopic("Politics")
               }}>Politics</DropdownMenuItem>
               <DropdownMenuItem onClick={()=>{
-                setTopic("Movies")
-              }}>Movies</DropdownMenuItem>
+                setTopic("Gaming")
+              }}>Gaming</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -69,20 +72,52 @@ const page = () => {
         <Textarea onChange={(e:any)=>{
         setContent(e.target.value)
       }} className="mt-2 " placeholder="Content" />
-         <Input  placeholder="Title" onChange={(e:any)=>{
-        setTitle(e.target.value)
-      }} className="mt-5" type="file" />
-        <Button onClick={async()=>{
+        
+        <div className="flex min-h-[30vh] mt-5 rounded-md bg-zinc-800 flex-col items-center justify-between border p-2">
+
+        <UploadDropzone
+        endpoint="imageUploader"
+        onClientUploadComplete={(res) => {
+            setImageUrl(res[0].url)
             
-            Axios.post("http://localhost:3000/api/blog",{
-                authorId: userDetail.id,
-                topic: Topic,
-                title: Title,
-                content: Content
+            setuploaded(true)
+            console.log("Files: ", res);
+            alert("Upload Completed");
+        }}
+        onUploadError={(error: Error) => {
+            // Do something with the error.
+            alert(`ERROR! ${error.message}`);
+        }}
+        />
+        </div>
+        <Button onClick={async()=>{
+            try {
+              if(uploaded && Topic!="Topic" && Title!="" && Content!=""){
+                Axios.post("http://localhost:3000/api/blog",{
+                  authorId: userDetail.id,
+                  topic: Topic,
+                  title: Title,
+                  content: Content,
+                  thumbnail: ImageUrl
+              })
+              .then(res=>{
+
+              
+              alert("Post created")
+              setImageUrl("")
+              setTopic("Topic")
+              setTitle("")
+              setContent("")
+              setuploaded(false)
             })
-            .then(res =>{
-                res.data
-            })
+              }
+              else{
+                alert("Please file the Enteries")
+              }
+            } catch (error) {
+              alert("error")
+            }
+            
         }} className="mt-5 font-bold w-full">Submit</Button>
       </div>
     </div>

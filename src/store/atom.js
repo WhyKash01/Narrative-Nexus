@@ -12,8 +12,13 @@ const userdetail = atom({
   key: "userdetail",
   default: {}
 })
+const posts = atom({
+  key: "posts",
+  default:[]
+})
 export {
   textLineNumber,
   textSize,
   userdetail,
+  posts,
 };
