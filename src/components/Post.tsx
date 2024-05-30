@@ -41,7 +41,7 @@ const Post = (props: any) => {
               alt=""
             ></Image>
           </div>
-          1,7k
+          {props.vote}
           <div className="h-8 w-10 justify-center rounded-full items-center hover:bg-red-700 flex">
             <Image
               className="h-4 w-5 "
