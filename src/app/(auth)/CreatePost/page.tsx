@@ -69,7 +69,9 @@ const page = () => {
         <Textarea onChange={(e:any)=>{
         setContent(e.target.value)
       }} className="mt-2 " placeholder="Content" />
-        
+         <Input  placeholder="Title" onChange={(e:any)=>{
+        setTitle(e.target.value)
+      }} className="mt-5" type="file" />
         <Button onClick={async()=>{
             
             Axios.post("http://localhost:3000/api/blog",{
