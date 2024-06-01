@@ -60,7 +60,7 @@ model Comments{
   id Int @id @default(autoincrement())
   content String
   like Int @default(0)
-  dislike Int @default(0)
+  dislike Int @default(0) 
   user User @relation(fields: [accoutId], references: [id])
   post Blog @relation(fields: [postId], references: [id])
 }
