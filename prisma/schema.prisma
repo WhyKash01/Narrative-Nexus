@@ -22,6 +22,7 @@ model User{
   post Blog[]
   comments Comments[]
   userDetail UserDetail?
+  Uname Blog?
 }
 model UserDetail{
   id Int @id @default(autoincrement())
@@ -29,21 +30,28 @@ model UserDetail{
   followers Int @default(0)
   following Int @default(0)
   bio String?
-  profilePhoto String?
+  profilePhoto String? @unique
   coverPhoto String?
+  
+  blog Blog? 
   user User @relation(fields: [userId], references: [id])
 }
 
 model Blog {
-  id Int @id @default(autoincrement())
-  authorId Int
+  id Int @default(autoincrement())
+  authorId Int 
   title String
   topic String
   content String
   thumbnail String?
   vote Int @default(0)
   Comments Comments[]
-  author User @relation(fields: [authorId], references: [id])
+  Prophoto String @unique
+  Username String
+  User User @relation("username", fields: [Username], references: [username])
+  UserDetail UserDetail @relation("photo", fields: [Prophoto], references: [profilePhoto])
+  author User @relation("id", fields: [authorId], references: [id])
+  @@id([authorId, Username])
 }
 
 model Comments{
