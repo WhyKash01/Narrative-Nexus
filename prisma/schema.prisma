@@ -13,55 +13,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  name String?
-  username String @unique
-  email String @unique
-  password String
-  post Blog[]
-  comments Comments[]
+model User {
+  id         Int         @id @default(autoincrement())
+  name       String?
+  username   String      @unique
+  email      String      @unique
+  password   String
+  Uname       Blog[]      @relation("bye")
+  comments   Comments[]
   userDetail UserDetail?
-  Uname Blog?
+  blog       Blog[]      @relation("hi")
 }
-model UserDetail{
-  id Int @id @default(autoincrement())
-  userId Int @unique
-  followers Int @default(0)
-  following Int @default(0)
-  bio String?
+
+model UserDetail {
+  id           Int     @id @default(autoincrement())
+  userId       Int     @unique
+  followers    Int     @default(0)
+  following    Int     @default(0)
+  bio          String?
   profilePhoto String? @unique
-  coverPhoto String?
-  
-  blog Blog? 
-  user User @relation(fields: [userId], references: [id])
+  coverPhoto   String?
+
+  blog Blog?
+  user User  @relation(fields: [userId], references: [id])
 }
 
 model Blog {
-  id Int @default(autoincrement())
-  authorId Int 
-  title String
-  topic String
-  content String
-  thumbnail String?
-  vote Int @default(0)
-  Comments Comments[]
-  Prophoto String @unique
-  Username String
-  User User @relation("username", fields: [Username], references: [username])
-  UserDetail UserDetail @relation("photo", fields: [Prophoto], references: [profilePhoto])
-  author User @relation("id", fields: [authorId], references: [id])
-  @@id([authorId, Username])
+  id         Int        @id @default(autoincrement())
+  authorId   Int
+  title      String
+  topic      String
+  content    String
+  thumbnail  String?
+  vote       Int        @default(0)
+  Comment    Comments[]
+  Prophoto   String     @unique
+  Uname      String
+  User       User       @relation("bye", fields: [Uname], references: [username])
+  UserDetail UserDetail @relation(fields: [Prophoto], references: [profilePhoto])
+  author     User       @relation("hi", fields: [authorId], references: [id])
 }
 
-model Comments{
-  postId Int @unique
-  accoutId Int @unique
-  id Int @id @default(autoincrement())
-  content String
-  like Int @default(0)
-  dislike Int @default(0) 
-  user User @relation(fields: [accoutId], references: [id])
-  post Blog @relation(fields: [postId], references: [id])
+model Comments {
+  postId   Int    @unique
+  accoutId Int    @unique
+  id       Int    @id @default(autoincrement())
+  content  String
+  like     Int    @default(0)
+  dislike  Int    @default(0)
+  user     User   @relation(fields: [accoutId], references: [id])
+  Blog     Blog   @relation(fields: [blogId], references: [id])
+  blogId   Int
 }
-
