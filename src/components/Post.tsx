@@ -14,7 +14,7 @@ const Post = (props: any) => {
             <AvatarImage src="" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          Whykash
+          {props.Uname}
         </div>
         <Button className="bg-red-700 font-bold text-sm h-6 rounded-full">
           Join

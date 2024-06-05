@@ -19,10 +19,9 @@ model User {
   username   String      @unique
   email      String      @unique
   password   String
-  Uname       Blog[]      @relation("bye")
   comments   Comments[]
   userDetail UserDetail?
-  blog       Blog[]      @relation("hi")
+  blog       Blog[]      
 }
 
 model UserDetail {
@@ -30,11 +29,9 @@ model UserDetail {
   userId       Int     @unique
   followers    Int     @default(0)
   following    Int     @default(0)
-  bio          String?
-  profilePhoto String? @unique
-  coverPhoto   String?
-
-  blog Blog?
+  bio          String @default("")
+  profilePhoto String @default("https://utfs.io/f/2d51fa23-2392-416d-a240-86b930bb32b8-1ufikm.png")
+  coverPhoto   String @default("https://utfs.io/f/2d51fa23-2392-416d-a240-86b930bb32b8-1ufikm.png")
   user User  @relation(fields: [userId], references: [id])
 }
 
@@ -47,11 +44,9 @@ model Blog {
   thumbnail  String?
   vote       Int        @default(0)
   Comment    Comments[]
-  Prophoto   String     @unique
+  Prophoto   String     
   Uname      String
-  User       User       @relation("bye", fields: [Uname], references: [username])
-  UserDetail UserDetail @relation(fields: [Prophoto], references: [profilePhoto])
-  author     User       @relation("hi", fields: [authorId], references: [id])
+  author     User       @relation( fields: [authorId], references: [id])
 }
 
 model Comments {

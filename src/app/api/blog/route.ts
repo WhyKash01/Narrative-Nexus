@@ -4,9 +4,22 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 export async function POST(req: NextRequest){
     const body = await req.json();
-    
+    let user = await prisma.user.findUnique({
+        where:{
+            id : body.authorId
+        }
+    })
+    let userDetail = await prisma.userDetail.findUnique({
+        where:{
+            userId: body.authorId
+        }
+    })
+    let username:string=user?.username!
+    let prophoto:string=userDetail?.profilePhoto!
     const post = await prisma.blog.create({
         data:{
+            Prophoto:   prophoto ,
+            Uname: username,
             authorId: body.authorId,
             content: body.content,
             title: body.title,
