@@ -26,7 +26,7 @@ const Post = () => {
             <div className='flex gap-5 items-center text-xl mt-5 font-bold  '>Post
             <Link href="/CreatePost">Create Post</Link></div>
         <div className='grid mt-5  gap-2 grid-cols-2'>
-            {JSON.stringify(post)}
+            {JSON.stringify(post)} 
             {post.map((c: any,t: any)=>{
               return <Posts image={c.thumbnail} username={c.Uname} proPhoto={c.Prophoto} content={c.content} title={c.title} vote={c.vote} ></Posts>
             })}
