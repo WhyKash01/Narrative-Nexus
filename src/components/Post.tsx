@@ -11,10 +11,10 @@ const Post = (props: any) => {
       <div className="flex justify-between">
         <div className="flex items-center text-sm gap-2">
           <Avatar className="w-7 h-7 text-xs">
-            <AvatarImage src="" />
+            <AvatarImage src={props.proPhoto} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          {props.Uname}
+          {props.username}
         </div>
         <Button className="bg-red-700 font-bold text-sm h-6 rounded-full">
           Join
