@@ -31,9 +31,8 @@ const Profile = () => {
     <div className='mt-[10vh] ml-[25vw] mr-10'>
             <div className='border bg px-10 py-5 gap-10 rounded-md flex items-center'>
             <div className='w-[20vw] '>
-            <Image className="p-[1.5px] rounded-full hover:cursor-pointer bg-white " src={userDetail.profilePhoto} width={800} height={800} alt="@shadcn" />
+            <Image className="p-[1.5px] w-[200px] h-[200px] rounded-full hover:cursor-pointer bg-white " src={userDetail.profilePhoto} width={800} height={800} alt="@shadcn" />
             </div>    
-            
             <div className='w-[40vw]'>
                 <div className='flex gap-5 items-center'>
                 <h2 className='text-xl font-semibold'>{session.data?.user?.name}</h2>

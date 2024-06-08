@@ -35,7 +35,6 @@ const page = () => {
       authenticate: session.status == "authenticated" ? true : false,
     }).then((res) => {
       console.log(res.data.userdetail);
-
       setuserdetail(res.data.userdetail[0]);
     });
   }, []);
@@ -110,7 +109,7 @@ const page = () => {
               alert("Upload Completed");
             }}
             onUploadError={(error: Error) => {
-              // Do something with the error.
+              
               alert(`ERROR! ${error.message}`);
             }}
           />
