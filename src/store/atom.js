@@ -12,6 +12,10 @@ const userdetail = atom({
   key: "userdetail",
   default: {}
 })
+const userD = atom({
+  key: "user",
+  default: {}
+})
 const posts = atom({
   key: "posts",
   default:[]
@@ -21,4 +25,5 @@ export {
   textSize,
   userdetail,
   posts,
+  userD,
 };

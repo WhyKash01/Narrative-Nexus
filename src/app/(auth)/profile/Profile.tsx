@@ -7,12 +7,13 @@ import Post from './Post'
 import {useSession } from "next-auth/react";
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
-import {userdetail} from "./../../../store/atom"
+import {userdetail,userD} from "./../../../store/atom"
+import Link from 'next/link'
 
 const Profile = () => {
     const session = useSession();
     
-    
+    const [userDe, setuserDe]=useRecoilState<any>(userD)
     const [userDetail, setuserdetail]=useRecoilState<any>(userdetail)
     useEffect(() => {
       
@@ -20,9 +21,9 @@ const Profile = () => {
           email: session.data?.user?.email,
           authenticate: (session.status == "authenticated")?true:false
           }).then(res=>{
-            console.log(res.data.userdetail)
             
-            setuserdetail(res.data.userdetail[0])
+            setuserDe(res.data.data.User)
+            setuserdetail(res.data.data.userdetail[0])
           })
       
     }, [])
@@ -35,18 +36,18 @@ const Profile = () => {
             </div>    
             <div className='w-[40vw]'>
                 <div className='flex gap-5 items-center'>
-                <h2 className='text-xl font-semibold'>{session.data?.user?.name}</h2>
-                <Button>edit profile</Button>
+                <h2 className='text-xl font-semibold'>{userDe.username}</h2>
+                <Link href={"/EditProfile"}>edit profile</Link>
                 </div>
                 <div className='flex mt-2 gap-5'>
                     <div>0 post</div>
                     <div>{userDetail.followers} followers</div>
                     <div>{userDetail.following} following</div>
                 </div>
-                <div className='mt-2'>{session.data?.user?.name}
+                
+                <div className='mt-2'>{userDe.name}
                 </div>
-                <div className=' mt-2'>{userDetail.bio} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis laudantium perferendis velit molestiae, dignissimos, aliquam perspiciatis eum, itaque omnis doloribus qui vitae? Vitae aperiam harum eum sint cumque enim atque molestias sit perferendis? Minus nemo odit cupiditate provident, nulla minima accusamus similique magnam inventore sequi ipsam, reiciendis, necessitatibus iste amet?
-                </div>
+                <div className=' mt-2'>{userDetail.bio}</div>
             </div>
             </div>
             <Post></Post>
