@@ -22,7 +22,7 @@ export async function PUT(req: NextRequest) {
             email: body.email
         }
     })
-    
+      
     const updateData: any = {
       ...(body.bio && { bio: body.bio }),
       ...(body.profilePhoto!== "" && { profilePhoto: body.profilePhoto }),
