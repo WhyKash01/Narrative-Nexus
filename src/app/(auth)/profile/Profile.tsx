@@ -9,6 +9,7 @@ import axios from 'axios'
 import { useRecoilState } from 'recoil'
 import {userdetail,userD} from "./../../../store/atom"
 import Link from 'next/link'
+import { url } from 'inspector'
 
 const Profile = () => {
     const session = useSession();
@@ -27,13 +28,18 @@ const Profile = () => {
           })
       
     }, [])
-    
+    const abc= "url(\""+userDetail.coverPhoto+"\")";
+    const inlineStyle = {
+      backgoundImage: `url("https://utfs.io/f/2f429b6b-5687-4257-8aa7-2738d29f1cbe-6ja2a6.png")`,
+      color: 'white',
+      padding: '10px 20px',
+    };
   return (
     <div className='mt-[10vh] ml-[25vw] mr-10'>
             <div className='border relative bg px-10 py-5 gap-10 rounded-md overflow-hidden flex items-center'>
-            <div className='top-0 left-0 right-0 h-[20vh] absolute overflow-hidden -z-10'>
-            <Image className=' w-full h-full relative' src={userDetail.coverPhoto} width={2000} height={1000} alt="@shadcn"></Image>
+            <div className='top-0 left-0 right-0 h-[20vh] rounded-md absolute overflow-hidden -z-10' style={inlineStyle}>
             </div>
+            {abc}
             <div className='w-[20vw] '>
             <Image className="p-[1.5px] w-[200px] h-[200px] rounded-full hover:cursor-pointer bg-white " src={userDetail.profilePhoto} width={800} height={800} alt="@shadcn" />
             </div>    
@@ -44,7 +50,7 @@ const Profile = () => {
                 <h2 className='text-xl font-semibold'>@{userDe.username}</h2>
                 <Link className='bg-red-700 px-2 py-1 capitalize text-black font-semibold border-zinc-800 border-2 rounded-md' href={"/EditProfile"}>edit profile</Link>
                 </div>
-                <div className='flex mt-2 gap-5'>
+                <div className='flex mt-2 capitalize gap-5'>
                     <div>0 post</div>
                     <div>{userDetail.followers} followers</div>
                     <div>{userDetail.following} following</div>
