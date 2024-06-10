@@ -62,7 +62,7 @@ const EditProfile = () => {
           <UploadDropzone
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
-                setProImageUrl(res[0].url);
+              setCoverImageUrl(res[0].url);
 
               
               console.log("Files: ", res);
