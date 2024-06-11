@@ -22,7 +22,7 @@ console.log(accounts)
         <div className="font-bold">Popular Narrative</div>
         {accounts.map((c: any,i: any)=>{
           return <div><div className="flex mt-3 items-center gap-5">
-          <Avatar className="w-10 h-10">
+          <Avatar className="w-14 h-14">
             <AvatarImage src={c.profilePhoto} alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
