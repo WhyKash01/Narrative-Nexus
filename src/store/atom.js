@@ -16,8 +16,16 @@ const userD = atom({
   key: "user",
   default: {}
 })
+const AllPost =atom({
+  key: "all post",
+  default:[]
+})
 const posts = atom({
   key: "posts",
+  default:[]
+})
+const popularAcc= atom({
+  key: "popular Account",
   default:[]
 })
 export {
@@ -26,4 +34,6 @@ export {
   userdetail,
   posts,
   userD,
+  AllPost,
+  popularAcc,
 };

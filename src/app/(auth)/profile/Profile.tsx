@@ -10,7 +10,8 @@ import { useRecoilState } from 'recoil'
 import {userdetail,userD} from "./../../../store/atom"
 import Link from 'next/link'
 import { url } from 'inspector'
-
+import { Avatar } from '@/components/ui/avatar'
+import {  AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 const Profile = () => {
     const session = useSession();
     
@@ -29,19 +30,19 @@ const Profile = () => {
       
     }, [])
     const abc= "url(\""+userDetail.coverPhoto+"\")";
-    const inlineStyle = {
-      backgoundImage: `url("https://utfs.io/f/2f429b6b-5687-4257-8aa7-2738d29f1cbe-6ja2a6.png")`,
-      color: 'white',
-      padding: '10px 20px',
-    };
+   
   return (
     <div className='mt-[10vh] ml-[25vw] mr-10'>
             <div className='border relative bg px-10 py-5 gap-10 rounded-md overflow-hidden flex items-center'>
-            <div className='top-0 left-0 right-0 h-[20vh] rounded-md absolute overflow-hidden -z-10' style={inlineStyle}>
+            <div className='top-0 left-0 right-0 h-[20vh] rounded-md absolute overflow-hidden -z-10'>
+            <Image className="w-full relative -top-48" src={userDetail.coverPhoto} width={10000} height={10000} alt="@shadcn" />
             </div>
-            {abc}
-            <div className='w-[20vw] '>
-            <Image className="p-[1.5px] w-[200px] h-[200px] rounded-full hover:cursor-pointer bg-white " src={userDetail.profilePhoto} width={800} height={800} alt="@shadcn" />
+            <div className='w-[20vw]'>
+            <Avatar className="w-[200px] h-[200px]">
+            <AvatarImage src={userDetail.profilePhoto} alt="@shadcn" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+            {/* <Image className="p-[1.5px] w-[200px] h-[200px] rounded-full hover:cursor-pointer bg-white " src={userDetail.profilePhoto} width={800} height={800} alt="@shadcn" /> */}
             </div>    
             <div className='w-[40vw] mt-[20vh]'>
                 <div className='flex gap-5 items-center'>
@@ -55,7 +56,7 @@ const Profile = () => {
                     <div>{userDetail.followers} followers</div>
                     <div>{userDetail.following} following</div>
                 </div>
-                <div className=' mt-2'>{userDetail.bio}</div>
+                <div className=' mt-2'>{userDetail.bio?userDetail.bio:"Bio"}</div>
             </div>
             </div>
             <Post></Post>

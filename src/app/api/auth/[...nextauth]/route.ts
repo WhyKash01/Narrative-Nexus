@@ -35,8 +35,7 @@ const handler = NextAuth({
                     } catch (error:any) {
                         throw new Error(error)
                         
-                    }
-                                 
+                    }  
             },
         }),
         GitHubProvider({

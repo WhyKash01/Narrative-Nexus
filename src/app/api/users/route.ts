@@ -54,4 +54,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export function PUT(request: any) {}
+export async function GET(request: NextRequest) {
+  const users = await prisma.userDetail.findMany({
+    
+    include: {
+      user: true
+  },
+  });
+  return NextResponse.json(users);
+}
