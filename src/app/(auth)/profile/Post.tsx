@@ -8,19 +8,6 @@ import { userdetail, posts } from '@/store/atom'
 import { useRecoilState } from 'recoil'
 const Post = () => {
   const [post, setPost]=useRecoilState<any>(posts)
-  const [userDetail, setuserdetail]=useRecoilState<any>(userdetail)
-  const session = useSession();
-  useEffect(() => {
-    
-    axios.post(`http://localhost:3000/api/blog/blogDetail`, {
-    id: userDetail.id
-    }).then(res=>{
-      setPost(res.data)
-      console.log(res.data)
-      
-    })
-
-}, [])
   return (
     <div className='border-t'>
             <div className='flex gap-5 items-center text-xl mt-5 font-bold  '>Post
