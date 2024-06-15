@@ -1,34 +1,36 @@
-import React, { Suspense } from 'react'
+"use client"
+import React, { Suspense } from "react";
 import { Avatar } from "@/components/ui/avatar";
 
-import Header from "./../../../components/Header"
-import LeftPart from '@/components/LeftPart'
-import usericon from "./../../../../public/user1.png"
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import Profile, { wait } from './Profile';
-import Loading from './loading';
+import Header from "./../../../components/Header";
+import LeftPart from "@/components/LeftPart";
+import usericon from "./../../../../public/user1.png";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Profile, { wait } from "./Profile";
+import Loading from "./loading";
+import PopularAcc from "@/components/PopularAcc";
 // async function Render() {
 //   new Promise (resolve=> setTimeout(resolve, 2000))
 //   return(
 //     <Profile></Profile>
 //   )
 // }
-const page =() => {
+const page = () => {
   return (
     <div>
-        <Header></Header>
-        <div className="flex relative ">
+      <Header></Header>
+      <div className="flex relative ">
         <div className="hidden 2xl:block">
-        <LeftPart></LeftPart>
+          <LeftPart></LeftPart>
         </div>
         <Suspense fallback={<Loading></Loading>}>
-        <Profile></Profile>
+          <Profile></Profile>
         </Suspense>
+        <PopularAcc></PopularAcc>
       </div>
     </div>
-    
-  )
-}
+  );
+};
 
-export default page
+export default page;

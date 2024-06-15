@@ -45,7 +45,7 @@ export default async function Profile() {
   const abc = 'url("' + userDetail.coverPhoto + '")';
 
   return (
-    <div className="mt-[10vh] ml-[25vw] mr-10">
+    <div className="2xl:mt-[10vh] mt-[12vh] w-[65vw] 2xl:w-[50vw] xl:ml-[5vw] 2xl:ml-[25vw] mr-10">
       <div className="border relative bg px-10 py-5 gap-10 rounded-md overflow-hidden flex items-center">
         <div className="top-0 left-0 right-0 h-[20vh] rounded-md absolute overflow-hidden -z-10">
           <Image
