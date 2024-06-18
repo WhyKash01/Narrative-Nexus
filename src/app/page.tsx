@@ -1,13 +1,15 @@
 "use client"
 import Image from "next/image";
-import {RecoilRoot} from 'recoil';
+import {RecoilRoot, useRecoilState} from 'recoil';
 import Header from './../components/Header'
 import LeftPart from "@/components/LeftPart";
 import RightPart from "@/components/RightPart";
 import PopularAcc from "@/components/PopularAcc";
 
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+
 export default function Home() {
+  
   return (
     <div>
     <RecoilRoot>

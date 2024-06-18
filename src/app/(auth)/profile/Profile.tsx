@@ -26,22 +26,29 @@ export default async function Profile() {
       email: session.data?.user?.email,
       authenticate: session.status == "authenticated" ? true : false,
     });
-    
+    let ID=userDetail.id;
+    if(userDetail.id==undefined){
+      ID=0
+    }
     const posts:any = await axios.post(
       `http://localhost:3000/api/blog/blogDetail`,
       {
-        id: userDetail.id,
+        id: ID,
       }
     );
-    
+    console.log(userDetail.id)
     return Promise.all([res, posts])
   }
   useEffect(() => {
     data().then((data:any)=>{
-      console.log(data[1])
+      try {
+        console.log(data[0])
       setuserDe(data[0].data.data.User);
       setuserdetail(data[0].data.data.userdetail[0]);
       setPost(data[1].data);
+      } catch (error) {
+        
+      }
     })
   }, []);
 

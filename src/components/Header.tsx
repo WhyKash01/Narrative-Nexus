@@ -10,14 +10,41 @@ import Hamberger from "./Hamberger";
 import { Input } from "@/components/ui/input";
 import Search from "./../../public/search.png";
 import logo from "./../../public/letter-n.png";
-import { useRouter } from 'next/navigation'
+import {  redirect, useRouter } from 'next/navigation'
 import SelectDemo from "./SelectDemo";
 import usericon from "./../../public/user1.png"; 
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRecoilState } from "recoil";
+import { userD, userdetail } from "@/store/atom";
+import axios from "axios";
+import { useEffect } from "react";
 export default function Home() {
   const session = useSession();
   console.log(session);
   const router = useRouter()
+  
+  const [userDe, setuserDe] = useRecoilState<any>(userD);
+  const [userDetail, setuserdetail] = useRecoilState<any>(userdetail);
+  
+  async function data() {
+    const res: any = await axios.post(`http://localhost:3000/api/users/hasdj`, {
+      email: session.data?.user?.email,
+      authenticate: session.status == "authenticated" ? true : false,
+    });
+    return Promise.all([res])
+    
+  }
+  useEffect(() => {
+    data().then((data:any)=>{
+      try {
+        console.log(data[0].data.data.User)
+        setuserDe(data[0].data.data.User);
+        setuserdetail(data[0].data.data.userdetail[0]);  
+      } catch (error) {
+        
+      }
+    })
+  }, []);
   return (
     <div className="bg-red-800 fixed top-0 w-[100vw] z-50 flex shadow-lg justify-between px-10 py-3 border-b border-red-600">
       <div className="flex gap-10">
