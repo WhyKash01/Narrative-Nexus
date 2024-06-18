@@ -28,6 +28,10 @@ const popularAcc= atom({
   key: "popular Account",
   default:[]
 })
+const findedAcc= atom({
+  key: "findedAcc",
+  default:[]
+})
 export {
   textLineNumber,
   textSize,
@@ -36,4 +40,5 @@ export {
   userD,
   AllPost,
   popularAcc,
+  findedAcc,
 };

@@ -15,17 +15,17 @@ import SelectDemo from "./SelectDemo";
 import usericon from "./../../public/user1.png"; 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
-import { userD, userdetail } from "@/store/atom";
+import { findedAcc, userD, userdetail } from "@/store/atom";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 export default function Home() {
   const session = useSession();
   console.log(session);
   const router = useRouter()
-  
+  const [find, setfind]= useState("")
   const [userDe, setuserDe] = useRecoilState<any>(userD);
   const [userDetail, setuserdetail] = useRecoilState<any>(userdetail);
-  
+  const [acc, setacc]= useRecoilState(findedAcc)
   async function data() {
     const res: any = await axios.post(`http://localhost:3000/api/users/hasdj`, {
       email: session.data?.user?.email,
@@ -63,13 +63,40 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      <div className="relative">
       <div className="flex items-center bg-zinc-800 px-4 sm:px-5 rounded-full">
         <Image className="w-4 h-4" src={Search} alt=""></Image>
         <Input
           type="search"
+          onChange={(e: any) => {
+            setfind(e.target.value);
+            axios.post("http://localhost:3000/api/find", {
+              username: e.target.value
+            }).then((res)=>{
+              setacc(res.data)
+            })
+          }}
+          onSubmit={()=>{
+            
+          }}
           className="bg-transparent w-[30vw] placeholder:font-semibold font-bold placeholder:text-zinc-300 text-white border-transparent focus:border-transparent "
           placeholder="Search Narrative"
         />
+      </div>
+      <div className="absolute bg-zinc-900 w-full mt-1 p-5 rounded-md border-zinc-500 border-2">
+      {acc.map((c:any, t)=>{
+        return <div><div className="flex mt-3 items-center gap-5">
+        {/* <Avatar className="w-14 h-14">
+          <AvatarImage src={c.profilePhoto} alt="@shadcn" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar> */}
+        <div className="text-xs ">
+          <div className="text-sm font-semibold">@{c.username}</div>
+          {/* <div>{c.followers} Followers</div> */}
+        </div>
+      </div></div>
+      })}
+      </div>
       </div>
       <div className="flex items-center gap-1 sm:gap-5">
         {session.status == "unauthenticated" ? (
