@@ -7,12 +7,11 @@ import Post from "./Post";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { userdetail, userD, posts } from "./../../../store/atom";
+import { userdetail, userD, posts } from "../../../store/atom";
 import Link from "next/link";
 import { url } from "inspector";
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-
 
 export async function wait(ms: any) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -27,27 +26,25 @@ export default async function Profile() {
       email: session.data?.user?.email,
       authenticate: session.status == "authenticated" ? true : false,
     });
-    
-    const posts:any = await axios.post(
+
+    const posts: any = await axios.post(
       `http://localhost:3000/api/blog/blogDetail`,
       {
         id: Number(session.data?.user.id),
       }
     );
-    console.log(session.data?.user.id)
-    return Promise.all([res, posts])
+    console.log(session.data?.user.id);
+    return Promise.all([res, posts]);
   }
   useEffect(() => {
-    data().then((data:any)=>{
+    data().then((data: any) => {
       try {
-        console.log(data[0])
-      setuserDe(data[0].data.data.User);
-      setuserdetail(data[0].data.data.userdetail[0]);
-      setPost(data[1].data.reverse());
-      } catch (error) {
-        
-      }
-    })
+        console.log(data[0]);
+        setuserDe(data[0].data.data.User);
+        setuserdetail(data[0].data.data.userdetail[0]);
+        setPost(data[1].data.reverse());
+      } catch (error) {}
+    });
   }, []);
 
   const abc = 'url("' + userDetail.coverPhoto + '")';

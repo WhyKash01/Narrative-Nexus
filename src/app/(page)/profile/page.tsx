@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import React, { Suspense } from "react";
 import { Avatar } from "@/components/ui/avatar";
 
-import Header from "./../../../components/Header";
+import Header from "../../../components/Header";
 import LeftPart from "@/components/LeftPart";
 import usericon from "./../../../../public/user1.png";
 import Image from "next/image";
