@@ -13,11 +13,12 @@ import { url } from "inspector";
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
+
 export async function wait(ms: any) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 export default async function Profile() {
-  const session = useSession();
+  const session: any = useSession();
   const [post, setPost] = useRecoilState<any>(posts);
   const [userDe, setuserDe] = useRecoilState<any>(userD);
   const [userDetail, setuserdetail] = useRecoilState<any>(userdetail);
@@ -26,17 +27,14 @@ export default async function Profile() {
       email: session.data?.user?.email,
       authenticate: session.status == "authenticated" ? true : false,
     });
-    let ID=userDetail.id;
-    if(userDetail.id==undefined){
-      ID=0
-    }
+    
     const posts:any = await axios.post(
       `http://localhost:3000/api/blog/blogDetail`,
       {
-        id: ID,
+        id: Number(session.data?.user.id),
       }
     );
-    console.log(userDetail.id)
+    console.log(session.data?.user.id)
     return Promise.all([res, posts])
   }
   useEffect(() => {
@@ -45,7 +43,7 @@ export default async function Profile() {
         console.log(data[0])
       setuserDe(data[0].data.data.User);
       setuserdetail(data[0].data.data.userdetail[0]);
-      setPost(data[1].data);
+      setPost(data[1].data.reverse());
       } catch (error) {
         
       }

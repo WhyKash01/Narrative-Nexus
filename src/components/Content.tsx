@@ -8,14 +8,13 @@ const Content = () => {
   useEffect(() => {
       
     axios.get(`http://localhost:3000/api/blog`).then(res=>{
-      
-      setPost(res.data)
+      setPost(res.data.reverse())
     })
-
 }, [])
   return (
     <div className='ml-[5vw] mr-[3vh] gap-2 flex flex-col my-[2vh]'>
-        {posts.map((c : any,i :any)=>{
+        {
+        posts.map((c : any,i :any)=>{
           return <Posts image={c.thumbnail} username={c.Uname} proPhoto={c.Prophoto} topic={c.topic} content={c.content} title={c.title} vote={c.vote} ></Posts>
             
         })}
