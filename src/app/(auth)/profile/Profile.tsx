@@ -13,33 +13,36 @@ import { url } from "inspector";
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-export async function wait(ms:any) {
-  return new Promise (resolve=> setTimeout(resolve, ms)) 
+export async function wait(ms: any) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 export default async function Profile() {
-  
   const session = useSession();
-  const [post, setPost]=useRecoilState<any>(posts)
+  const [post, setPost] = useRecoilState<any>(posts);
   const [userDe, setuserDe] = useRecoilState<any>(userD);
   const [userDetail, setuserdetail] = useRecoilState<any>(userdetail);
-
+  async function data() {
+    const res: any = await axios.post(`http://localhost:3000/api/users/hasdj`, {
+      email: session.data?.user?.email,
+      authenticate: session.status == "authenticated" ? true : false,
+    });
+    
+    const posts:any = await axios.post(
+      `http://localhost:3000/api/blog/blogDetail`,
+      {
+        id: userDetail.id,
+      }
+    );
+    
+    return Promise.all([res, posts])
+  }
   useEffect(() => {
-    async function data() {
-      
-      const res = await axios.post(`http://localhost:3000/api/users/hasdj`, {
-        email: session.data?.user?.email,
-        authenticate: session.status == "authenticated" ? true : false,
-      });
-      const data = res;
-      setuserDe(res.data.data.User);
-      setuserdetail(res.data.data.userdetail[0]);
-      const posts = await axios.post(`http://localhost:3000/api/blog/blogDetail`, {
-        id: userDetail.id
-        })
-        setPost(posts.data)
-        console.log(res)
-    }
-    data();
+    data().then((data:any)=>{
+      console.log(data[1])
+      setuserDe(data[0].data.data.User);
+      setuserdetail(data[0].data.data.userdetail[0]);
+      setPost(data[1].data);
+    })
   }, []);
 
   const abc = 'url("' + userDetail.coverPhoto + '")';
