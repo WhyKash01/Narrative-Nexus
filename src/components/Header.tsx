@@ -76,14 +76,12 @@ export default function Home() {
               setacc(res.data)
             })
           }}
-          onSubmit={()=>{
-            
-          }}
+          
           className="bg-transparent w-[30vw] placeholder:font-semibold font-bold placeholder:text-zinc-300 text-white border-transparent focus:border-transparent "
           placeholder="Search Narrative"
         />
       </div>
-      <div className="absolute bg-zinc-900 w-full mt-1 p-5 rounded-md border-zinc-500 border-2">
+      <div className="absolute hidden bg-zinc-900 w-full mt-1 p-5 rounded-md border-zinc-500 border-2">
       {acc.map((c:any, t)=>{
         return <div><div className="flex mt-3 items-center gap-5">
         {/* <Avatar className="w-14 h-14">
