@@ -92,7 +92,7 @@ export default function Home() {
         </Avatar> */}
         <div className="text-xs ">
           <div className="text-sm font-semibold">@{c.username}</div>
-          {/* <div>{c.followers} Followers</div> */}
+          {/* <div>{c.followers} Followers</div> */} 
         </div>
       </div></div>
       })}
