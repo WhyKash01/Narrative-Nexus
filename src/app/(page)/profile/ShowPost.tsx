@@ -14,7 +14,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import { useRouter } from "next/navigation";
+
 const Post = (props: any) => {
+  const router = useRouter();
+    
   return (
     <div className="px-5 py-5 border rounded-md">
       <div className="flex justify-between">
@@ -35,9 +39,12 @@ const Post = (props: any) => {
             <DropdownMenuTrigger className="ml-2 focus:ring-0 focus:border-none">
             <Image  src={dots} className="w-6 h-6" alt=""></Image>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-900 py-3 px-3 rounded-md relative top-2 border-zinc-700 border ">
-              <DropdownMenuItem className="hover:cursor-pointer mb-2 bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center"><Image  src={edit} className="w-5 h-5" alt=""></Image> Edit</DropdownMenuItem>
-              <DropdownMenuItem className="hover:cursor-pointer bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center"><Image  src={del} className="w-6 h-6" alt=""></Image> delete</DropdownMenuItem>
+            <DropdownMenuContent className="z-50 bg-zinc-900 py-3 px-3 rounded-md relative top-2 border-zinc-700 border ">
+              <DropdownMenuItem onClick={()=>{
+               
+                router.push(`/EditPost?id=${props.id}`)
+            }} className="hover:cursor-pointer mb-2 bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center text-sm font-semibold"><Image  src={edit} className="w-5 h-5" alt=""></Image> Edit</DropdownMenuItem>
+              <DropdownMenuItem className="hover:cursor-pointer bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center text-sm font-semibold"><Image  src={del} className="w-5 h-5" alt=""></Image> Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -46,7 +53,7 @@ const Post = (props: any) => {
         {props.title}
       </div>
 
-      <div className="h-[50vh] relative flex items-center justify-center w-full  rounded-md mt-2">
+      <div className="h-[35vh] bg-gradient-to-r from-zinc-700 via-black to-zinc-700 relative flex items-center justify-center w-full  rounded-md mt-2">
         <div className=" hover:line-clamp-none absolute w-full bottom-0 p-5 rounded-b-md left-0 bg-zinc-900/50 mt-1">
           <div className="line-clamp-3">{props.content}</div>
         </div>

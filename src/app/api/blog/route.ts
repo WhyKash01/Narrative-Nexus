@@ -92,22 +92,16 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: 'User details not found' }, { status: 404 });
     }
 
-    // Extract current username and profile photo
-    const username = user.username ?? 'UnknownUser';
-    const profilePhoto = userDetail.profilePhoto ?? '';
-
+    const updateData: any = {
+      ...(content!== "" && { content }),
+      ...(title!== "" && { title }),
+      ...(thumbnail!== "" && { thumbnail }),
+      ...(topic!== "" && { topic }),
+    };
     // Update the blog post
     const updatedPost = await prisma.blog.update({
       where: { id },
-      data: {
-        Prophoto: profilePhoto,
-        Uname: username,
-        authorId,
-        content,
-        title,
-        thumbnail,
-        topic,
-      },
+      data: updateData
     });
 
     return NextResponse.json(updatedPost, { status: 200 });
