@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { userdetail, posts } from '@/store/atom'
 import { useRecoilState } from 'recoil'
+import ShowPost from "./ShowPost"
 const Post = () => {
   const [post, setPost]=useRecoilState<any>(posts)
   return (
@@ -15,7 +16,7 @@ const Post = () => {
         <div className='grid mt-5  gap-2 grid-cols-2'>
             
             {post.map((c: any,t: any)=>{
-              return <Posts image={c.thumbnail} username={c.Uname} proPhoto={c.Prophoto} topic={c.topic} content={c.content} title={c.title} vote={c.vote} ></Posts>
+              return <ShowPost image={c.thumbnail} username={c.Uname} proPhoto={c.Prophoto} topic={c.topic} content={c.content} title={c.title} vote={c.vote} ></ShowPost>
             })}
             
         </div>
