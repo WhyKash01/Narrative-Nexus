@@ -28,14 +28,21 @@ const page = () => {
   const [Title, setTitle] = useState("");
   const [Topic, setTopic] = useState("Topic");
   const [Content, setContent] = useState("");
-
-  useEffect(() => {
-    Axios.post(`http://localhost:3000/api/users/hasdj`, {
+  async function data() {
+    const res: any = await Axios.post(`http://localhost:3000/api/users/hasdj`, {
       email: session.data?.user?.email,
       authenticate: session.status == "authenticated" ? true : false,
-    }).then((res) => {
-      console.log(res.data.userdetail);
-      setuserdetail(res.data.userdetail[0]);
+    });
+
+    
+    return Promise.all([res]);
+  }
+  useEffect(() => {
+    data().then((data: any) => {
+      try {
+        console.log(data[0]);
+        setuserdetail(data[0].data.data.userdetail[0]);
+      } catch (error) {}
     });
   }, []);
   return (
@@ -66,10 +73,10 @@ const page = () => {
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
-                  setTopic("Movies");
+                  setTopic("Entertenment");
                 }}
               >
-                Movies
+                Entertenment
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -84,6 +91,13 @@ const page = () => {
                 }}
               >
                 Gaming
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setTopic("Technology");
+                }}
+              >
+                Technology
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -125,7 +139,7 @@ const page = () => {
                 Content != ""
               ) {
                 Axios.post("http://localhost:3000/api/blog", {
-                  authorId: userDetail.id,
+                  authorId: userDetail.userId,
                   topic: Topic,
                   title: Title,
                   content: Content,

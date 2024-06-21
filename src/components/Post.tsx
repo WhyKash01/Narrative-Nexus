@@ -26,13 +26,13 @@ const Post = (props: any) => {
         {props.title}
       </div>
       
-      <div className="h-[50vh] relative flex items-center justify-center w-full bg-zinc-800 rounded-md mt-2">
+      <div className="h-[50vh] relative flex items-center justify-center w-full  rounded-md mt-2">
       <div className=" hover:line-clamp-none absolute w-full bottom-0 p-5 rounded-b-md left-0 bg-zinc-900/50 mt-1">
         <div className="line-clamp-3">
         {props.content}
         </div>
       </div>
-        <Image className="max-h-full h-auto w-auto max-w-full  overflow-hidden" width={1000} height={1000} src={props.image} alt="" ></Image>
+        <Image className="max-h-full h-auto w-auto max-w-full rounded-md border border-zinc-500 overflow-hidden" width={1000} height={1000} src={props.image} alt="" ></Image>
         
       </div>
       <div className="flex gap-5 mt-3 items-center">

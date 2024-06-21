@@ -3,31 +3,49 @@ import zod from "zod";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  let user = await prisma.user.findUnique({
-    where: {
-      id: body.authorId,
-    },
-  });
-  let userDetail = await prisma.userDetail.findUnique({
-    where: {
-      userId: body.authorId,
-    },
-  });
-  let username: string = user?.username!;
-  let prophoto: string = userDetail?.profilePhoto!;
-  const post = await prisma.blog.create({
-    data: {
-      Prophoto: prophoto,
-      Uname: username,
-      authorId: body.authorId,
-      content: body.content,
-      title: body.title,
-      thumbnail: body.thumbnail,
-      topic: body.topic,
-    },
-  });
-  return NextResponse.json(post);
+  try {
+    const { authorId, content, title, thumbnail, topic } = await req.json();
+
+    if (!authorId || !content || !title) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: authorId },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const userDetail = await prisma.userDetail.findUnique({
+      where: { userId: authorId },
+    });
+
+    if (!userDetail) {
+      return NextResponse.json({ error: 'User details not found' }, { status: 404 });
+    }
+
+    const username = user.username ?? 'UnknownUser';
+    const profilePhoto = userDetail.profilePhoto ?? '';
+
+    const post = await prisma.blog.create({
+      data: {
+        Prophoto: profilePhoto,
+        Uname: username,
+        authorId: authorId,
+        content: content,
+        title: title,
+        thumbnail: thumbnail,
+        topic: topic,
+      },
+    });
+
+    return NextResponse.json(post, { status: 201 });
+  } catch (error) {
+    console.error('Error creating post:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 }
 
 export async function GET(request: any) {
