@@ -5,9 +5,9 @@ import Image from "next/image";
 import up from "./../../../../public/uper.png";
 import down from "./../../../../public/downer.png";
 import comment from "./../../../../public/comment.png";
-import dots from "./../../../../public/dots.png"
-import edit from "./../../../../public/edit.png"
-import del from "./../../../../public/delete.png"
+import dots from "./../../../../public/dots.png";
+import edit from "./../../../../public/edit.png";
+import del from "./../../../../public/delete.png";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +15,15 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRecoilState } from "recoil";
+import { posts } from "@/store/atom";
 
 const Post = (props: any) => {
   const router = useRouter();
-    
+  const [post, setPost] = useRecoilState<any>(posts);
+  const session :any= useSession();
   return (
     <div className="px-5 py-5 border rounded-md">
       <div className="flex justify-between">
@@ -37,17 +42,54 @@ const Post = (props: any) => {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger className="ml-2 focus:ring-0 focus:border-none">
-            <Image  src={dots} className="w-6 h-6" alt=""></Image>
+              <Image src={dots} className="w-6 h-6" alt=""></Image>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="z-50 bg-zinc-900 py-3 px-3 rounded-md relative top-2 border-zinc-700 border ">
-              <DropdownMenuItem onClick={()=>{
-               
-                router.push(`/EditPost?id=${props.id}`)
-            }} className="hover:cursor-pointer mb-2 bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center text-sm font-semibold"><Image  src={edit} className="w-5 h-5" alt=""></Image> Edit</DropdownMenuItem>
-              <DropdownMenuItem className="hover:cursor-pointer bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center text-sm font-semibold"><Image  src={del} className="w-5 h-5" alt=""></Image> Delete</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  router.push(`/EditPost?id=${props.id}`);
+                }}
+                className="hover:cursor-pointer mb-2 bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center text-sm font-semibold"
+              >
+                <Image src={edit} className="w-5 h-5" alt=""></Image> Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={async () => {
+                  async function deleteBlogPost(id: string) {
+                    try {
+                      const response = await axios.delete('/api/blog', {
+                        data: { id }, // Axios allows specifying request body in delete
+                      });
+                  
+                      console.log(response.data);
+                      alert('Blog post deleted successfully');
+                    } catch (error) {
+                      console.error('Error deleting blog post:', error);
+                      alert('Failed to delete blog post');
+                    }
+                  }
+                  async function data() {
+                    const posts: any = await axios.post(
+                      `http://localhost:3000/api/blog/blogDetail`,
+                      {
+                        id: Number(session.data?.user.id),
+                      }
+                    );
+                    setPost(posts.data.reverse())
+                  }
+                  // Example usage
+                  const blogId = props.id; // Replace with the actual blog ID
+                  deleteBlogPost(blogId).then(()=>{
+                    data()
+                  });
+                }}
+                className="hover:cursor-pointer bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center text-sm font-semibold"
+              >
+                <Image src={del} className="w-5 h-5" alt=""></Image> Delete
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div> 
+        </div>
       </div>
       <div className="text-lg line-clamp-1 mt-2 font-semibold">
         {props.title}

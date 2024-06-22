@@ -113,11 +113,15 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    
-    const { id } = await req.json();
-
+    // Parse JSON body
+    let { id } = await req.json();
+    id=Number(id)
+    // Validate 'id'
     if (!id) {
-      return NextResponse.json({ error: 'Blog post ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Blog post ID is required' },
+        { status: 400 }
+      );
     }
 
     // Check if the blog post exists
@@ -126,7 +130,10 @@ export async function DELETE(req: NextRequest) {
     });
 
     if (!existingPost) {
-      return NextResponse.json({ error: 'Blog post not found' }, { status: 404 });
+      return NextResponse.json(
+        { error: 'Blog post not found' },
+        { status: 404 }
+      );
     }
 
     // Delete the blog post
@@ -134,10 +141,17 @@ export async function DELETE(req: NextRequest) {
       where: { id },
     });
 
-    return NextResponse.json({ message: 'Blog post deleted successfully' }, { status: 200 });
+    return NextResponse.json(
+      { message: 'Blog post deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
+    // Log the error for debugging
     console.error('Error deleting blog post:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
 //postgres://avnadmin:AVNS_kqm0qUYDJEfRx22JlTk@pg-28ea5e11artical-itsyash9211-bde1.l.aivencloud.com:17594/defaultdb?sslmode=require
