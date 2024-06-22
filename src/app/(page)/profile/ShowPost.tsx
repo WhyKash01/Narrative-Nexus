@@ -47,7 +47,7 @@ const Post = (props: any) => {
               <DropdownMenuItem className="hover:cursor-pointer bg-zinc-800 px-5 py-2 flex gap-2 rounded-md items-center text-sm font-semibold"><Image  src={del} className="w-5 h-5" alt=""></Image> Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        </div> 
       </div>
       <div className="text-lg line-clamp-1 mt-2 font-semibold">
         {props.title}
