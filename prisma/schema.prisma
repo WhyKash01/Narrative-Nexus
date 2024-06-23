@@ -21,7 +21,8 @@ model User {
   password   String
   comments   Comments[]
   userDetail UserDetail?
-  blog       Blog[]      
+  blog       Blog[]
+  votes     Vote[]      
 }
 
 model UserDetail {
@@ -43,12 +44,29 @@ model Blog {
   content    String
   thumbnail  String?
   vote       Int        @default(0)
+  upvotes    Int      @default(0)
+  downvotes  Int      @default(0)
   Comment    Comments[]
   Prophoto   String     
   Uname      String
+  votes     Vote[]
+  createdAt DateTime @default(now())
   author     User       @relation( fields: [authorId], references: [id])
 }
+model Vote {
+  id        String   @id @default(uuid())
+  type      VoteType
+  postId    Int
+  post      Blog     @relation(fields: [postId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
 
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
+}
 model Comments {
   postId   Int    @unique
   accoutId Int    @unique
