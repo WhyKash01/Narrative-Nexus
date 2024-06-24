@@ -68,16 +68,21 @@ export async function POST(req: NextRequest) {
     if (previousVote === 'UPVOTE' && post?.vote===1 && newVote === 'DOWNVOTE') {
       increment = -1; // Changing from upvote to downvote
     } else if (previousVote === 'UPVOTE' && post?.vote===0 &&newVote === 'DOWNVOTE') {
-        increment = 0;
+        increment = 0; 
     } else if (previousVote === 'UPVOTE'&&newVote === 'DOWNVOTE') {
         increment = -2;
     } else if (previousVote === 'DOWNVOTE' && post?.vote===0 && newVote === 'UPVOTE') {
       increment = 1; // Changing from downvote to upvote
+    }
+    else if (previousVote === 'DOWNVOTE' && post?.vote===0 && newVote === 'UPVOTE') {
+        increment = 1;
     } else if (previousVote === 'DOWNVOTE' && newVote === 'UPVOTE') {
         increment = 2;
     } else if (newVote === 'UPVOTE') {
       increment = 1; // Adding a new upvote
-    } else if (newVote === 'DOWNVOTE') {
+    } else if (newVote === 'DOWNVOTE' && post?.vote===0) {
+        increment = 0; // Adding a new downvote
+    }else if (newVote === 'DOWNVOTE') {
       increment = -1; // Adding a new downvote
     }
   
