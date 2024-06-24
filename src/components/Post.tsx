@@ -50,10 +50,10 @@ const Post = (props: any) => {
           </div>
         </button>
         <VoteButton
+          vote={props.vote}
           postId={props.postId}
           userId={props.userId}
-          initialUpvotes={props.initialUpvotes}
-          initialDownvotes={props.initialDownvotes}
+          initialVotes={props.vote}
         ></VoteButton>
         <Button className="bg-zinc-700 items-center gap-1 text-white font-bold text-sm h-8 rounded-full">
           <Image

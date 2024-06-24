@@ -1,76 +1,90 @@
-// components/VoteButton.tsx
+// Example frontend vote button component using React and Axios
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { useRecoilState } from 'recoil';
+import { AllPost, exist } from '@/store/atom';
+import { inherits } from 'util';
+import up from "./../../public/uper.png";
+import down from "./../../public/downer.png";
+import Image from 'next/image';
 interface VoteButtonProps {
+  vote: any;
   postId: string;
   userId: string;
-  initialUpvotes: number;
-  initialDownvotes: number;
+  initialVotes: number;
 }
 
-const VoteButton: React.FC<VoteButtonProps> = ({ postId, userId, initialUpvotes, initialDownvotes }) => {
-  const [upvotes, setUpvotes] = useState(initialUpvotes);
-  const [downvotes, setDownvotes] = useState(initialDownvotes);
-  const [vote, setVote] = useState<null | 'UPVOTE' | 'DOWNVOTE'>(null);
-
-  useEffect(() => {
-    // Fetch the user's vote for this post
-    const fetchUserVote = async () => {
-      try {
-        const response = await axios.get(`/api/blog/vote/${postId}/${userId}`);
-        if (response.data) {
-          setVote(response.data.type);
-        }
-      } catch (error) {
-        console.error('Error fetching user vote:', error);
-      }
-    };
-
-    fetchUserVote();
-  }, [postId, userId]);
-
+const VoteButton: React.FC<VoteButtonProps> = ({ vote,postId, userId, initialVotes }) => {
+  const [votes, setVotes] = useState(vote);
+  const [posts, setPost]= useRecoilState(AllPost);
+  const [Exist, setExist]= useRecoilState<any>(exist)
+  const [color, setColor]= useState("")
   const handleVote = async (type: 'UPVOTE' | 'DOWNVOTE') => {
     try {
       const response = await axios.post('/api/blog/vote', {
-        userId,
         postId,
+        userId,
         voteType: type,
+      }).then((res)=>{
+        if(res.data.type=="UPVOTE"&&color!="green"){
+          setVotes(votes+1)
+        }
+        else if(res.data.type=="DOWNVOTE"&&color!="red"){
+          setVotes(votes-1)
+        }
       });
 
-      if (type === 'UPVOTE') {
-        setUpvotes(upvotes + 1);
-        if (vote === 'DOWNVOTE') {
-          setDownvotes(downvotes - 1);
-        }
-      } else {
-        setDownvotes(downvotes + 1);
-        if (vote === 'UPVOTE') {
-          setUpvotes(upvotes - 1);
-        }
-      }
-
-      setVote(type);
     } catch (error) {
       console.error('Error voting:', error);
     }
   };
-
+  
+  useEffect( () => {
+    const response = axios.get('/api/blog/vote', {
+      params: {
+        postId,
+        userId,
+      }
+    }).then((res)=>{
+      setExist(res)
+      console.log(res.data[0].exist)
+      if(res.data[0].exist===true){
+        if(res.data[1].type=="UPVOTE"){
+          setColor("green")
+        }
+        else{
+          setColor("red")
+        }
+      }
+      else{
+        setColor("black")
+      }
+    })
+    
+  }, [votes])
+  
   return (
-    <div>
+    <div
+    style={{ backgroundColor: color }} className='bg-zinc-700 gap-1 flex items-center hover:bg-zinc-700 text-white font-bold h-8  rounded-full'>
       <button
-        onClick={() => handleVote('UPVOTE')}
-        style={{ backgroundColor: vote === 'UPVOTE' ? 'green' : 'grey' }}
+       className="h-8 w-10 justify-center rounded-full items-center hover:bg-green-700 flex"
+        onClick={() => {
+          
+          handleVote('UPVOTE')}}
+        
       >
-        Upvote ({upvotes})
+        <Image className="h-4 w-5 " src={up} alt=""></Image>
       </button>
+      {votes}
       <button
+        className="h-8 w-10 justify-center rounded-full items-center hover:bg-red-600 flex"
         onClick={() => handleVote('DOWNVOTE')}
-        style={{ backgroundColor: vote === 'DOWNVOTE' ? 'red' : 'grey' }}
+        
       >
-        Downvote ({downvotes})
+        <Image className="h-4 w-5 " src={down} alt=""></Image>
       </button>
+      {/* {JSON.stringify(Exist.data.exist)} */}
     </div>
   );
 };

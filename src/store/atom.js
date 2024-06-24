@@ -32,6 +32,11 @@ const findedAcc= atom({
   key: "findedAcc",
   default:[]
 })
+
+const exist= atom({
+  key: "exist",
+  default:{}
+})
 export {
   textLineNumber,
   textSize,
@@ -39,6 +44,7 @@ export {
   posts,
   userD,
   AllPost,
+  exist,
   popularAcc,
   findedAcc,
 };
