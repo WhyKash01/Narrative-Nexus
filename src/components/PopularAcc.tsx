@@ -17,7 +17,7 @@ const PopularAcc = () => {
 }, [])
 console.log(accounts)
   return (
-    <div className=" mt-[12vh] w-[40vh] fixed right-5">
+    <div className=" mt-[12vh] sm:w-[40vh] w-[100vw] sm:fixed hidden right-5">
       <div className="bg-zinc-800 mr-5 py-5 px-5 rounded-md">
         <div className="font-bold">Popular Narrative</div>
         {accounts.map((c: any,i: any)=>{
