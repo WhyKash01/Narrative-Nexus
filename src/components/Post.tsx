@@ -40,15 +40,7 @@ const Post = (props: any) => {
         ></Image>
       </div>
       <div className="flex gap-5 mt-3 items-center">
-        <button className="bg-zinc-700 gap-1 flex items-center hover:bg-zinc-700 text-white font-bold h-8  rounded-full">
-          <div className="h-8 w-10 justify-center rounded-full items-center hover:bg-red-700 flex">
-            <Image className="h-4 w-5 " src={up} alt=""></Image>
-          </div>
-          {props.vote}
-          <div className="h-8 w-10 justify-center rounded-full items-center hover:bg-red-700 flex">
-            <Image className="h-4 w-5 " src={down} alt=""></Image>
-          </div>
-        </button>
+        
         <VoteButton
           vote={props.vote}
           postId={props.postId}

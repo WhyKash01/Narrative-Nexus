@@ -29,7 +29,7 @@ const VoteButton: React.FC<VoteButtonProps> = ({ vote,postId, userId, initialVot
       }).then((res)=>{
         if(res.data.type=="UPVOTE"&&color!="green"){
           setVotes(votes+1)
-        }
+        } 
         else if(res.data.type=="DOWNVOTE"&&color!="red"){
           setVotes(votes-1)
         }
