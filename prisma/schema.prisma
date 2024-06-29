@@ -19,10 +19,11 @@ model User {
   username   String      @unique
   email      String      @unique
   password   String
-  comments   Comments[]
+  comments   Comment[]
   userDetail UserDetail?
   blog       Blog[]
-  votes     Vote[]      
+  votes     Vote[]  
+  commentLikes CommentLike[]    
 }
 
 model UserDetail {
@@ -46,7 +47,7 @@ model Blog {
   vote       Int        @default(0)
   upvotes    Int      @default(0)
   downvotes  Int      @default(0)
-  Comment    Comments[]
+  Comment    Comment[]
   Prophoto   String     
   Uname      String
   votes     Vote[]
@@ -67,14 +68,42 @@ enum VoteType {
   UPVOTE
   DOWNVOTE
 }
-model Comments {
-  postId   Int    @unique
-  accoutId Int    @unique
-  id       Int    @id @default(autoincrement())
-  content  String
-  like     Int    @default(0)
-  dislike  Int    @default(0)
-  user     User   @relation(fields: [accoutId], references: [id])
-  Blog     Blog   @relation(fields: [blogId], references: [id])
-  blogId   Int
+// model Comments {
+//   accoutId Int    
+//   blogId   Int?
+//   parantId Int?   
+//   id       Int    @id @default(autoincrement())
+//   content  String
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+//   like     Int    @default(0)
+//   dislike  Int    @default(0)
+//   user     User   @relation(fields: [accoutId], references: [id])
+//   Blog     Blog?   @relation(fields: [blogId], references: [id])
+//   parent     Comments?  @relation(fields: [parantId], references: [id])
+//   children   Comments[] @relation("CommentToComment", fields: [id], references: [parentId])
+// }
+model Comment {
+  id         Int    @id @default(autoincrement())
+  content    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  authorId   Int
+  postId     Int?
+  parentId   Int?    // For nested comments
+  author     User      @relation(fields: [authorId], references: [id])
+  post       Blog?     @relation(fields: [postId], references: [id])
+  parent     Comment?   @relation("CommentToParent", fields: [parentId], references: [id])
+  children   Comment[]  @relation("CommentToParent") // Relation name must match the parent
+  commentLikes CommentLike[]
+  likes      Int        @default(0) // For like count
+  dislikes   Int        @default(0) // For dislike count // For like/dislike count
+}
+model CommentLike {
+  id         Int   @id @default(autoincrement())
+  commentId  Int
+  userId     Int
+  type       String   // 'LIKE' or 'DISLIKE'
+  user       User     @relation(fields: [userId], references: [id])
+  comment    Comment  @relation(fields: [commentId], references: [id])
 }
