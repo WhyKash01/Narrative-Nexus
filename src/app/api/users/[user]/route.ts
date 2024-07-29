@@ -81,4 +81,38 @@ export async function POST(req: NextRequest){
         }
       });
 }
+export async function GET(req: NextRequest){
+  try {
+    // Parse the URL to extract query parameters
+    const { searchParams } = new URL(req.url);
+    const username = searchParams.get('username');
+
+    if (!username) {
+      return NextResponse.json({ message: 'username query parameter is required' }, { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { username },
+    });
+
+    if (!user) {
+      return NextResponse.json({ message: 'User not found' }, { status: 404 });
+    }
+
+    const userDetails = await prisma.userDetail.findMany({
+      where: { userId: user.id },
+    });
+    const posts = await prisma.blog.findMany({
+      where:{
+          authorId: user.id
+      }
+  })
+  const data={user,posts,userDetails}
+    return NextResponse.json({ data });
+  } catch (error) {
+    // Use type assertion to handle unknown type
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    return NextResponse.json({ message: 'Internal server error', error: errorMessage }, { status: 500 });
+  }
+}
 

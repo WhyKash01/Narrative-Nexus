@@ -16,6 +16,14 @@ const userD = atom({
   key: "user",
   default: {}
 })
+const Seruserdetail = atom({
+  key: "seruserdetail",
+  default: {}
+})
+const SeruserD = atom({
+  key: "seruser",
+  default: {}
+})
 const AllPost =atom({
   key: "all post",
   default:[]
@@ -39,6 +47,8 @@ const exist= atom({
 })
 export {
   textLineNumber,
+  Seruserdetail,
+  SeruserD,
   textSize,
   userdetail,
   posts,

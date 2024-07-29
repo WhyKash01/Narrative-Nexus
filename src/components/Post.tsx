@@ -6,7 +6,9 @@ import up from "./../../public/uper.png";
 import down from "./../../public/downer.png";
 import comment from "./../../public/comment.png";
 import VoteButton from "./VoteButton";
+import Link from "next/link";
 const Post = (props: any) => {
+  const username=props.username;
   return (
     <div className="px-5 py-5 border rounded-md">
       <div className="flex justify-between">
@@ -15,7 +17,9 @@ const Post = (props: any) => {
             <AvatarImage src={props.proPhoto} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div className="font-semibold">{props.username}</div>
+          <Link href={{pathname:`/profileSearch`,
+            query:{username}
+          }} className="font-semibold">{props.username}</Link>
 
           <div className="ml-2 font-semibold">{props.topic}</div>
         </div>
@@ -40,7 +44,6 @@ const Post = (props: any) => {
         ></Image>
       </div>
       <div className="flex gap-5 mt-3 items-center">
-        
         <VoteButton
           vote={props.vote}
           postId={props.postId}
